@@ -88,7 +88,7 @@ Now, open your project in a browser, and the Rich Text Editor will be displayed!
 
 Rich Text Editor control is also offered in following list of frameworks.
 
-| [<img src="https://ej2.syncfusion.com/github/images/angular-new.svg" height="50" />](https://www.syncfusion.com/angular-ui-components?utm_medium=listing&utm_source=github)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Angular](https://www.syncfusion.com/angular-ui-components?utm_medium=listing&utm_source=github)&nbsp;&nbsp;&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/react.svg"  height="50" />](https://www.syncfusion.com/react-ui-components?utm_medium=listing&utm_source=github)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[React](https://www.syncfusion.com/react-ui-components?utm_medium=listing&utm_source=github)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/vue.svg" height="50" />](https://www.syncfusion.com/vue-ui-components?utm_medium=listing&utm_source=github)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Vue](https://www.syncfusion.com/vue-ui-components?utm_medium=listing&utm_source=github)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/netcore.svg" height="50" />](https://www.syncfusion.com/aspnet-core-ui-controls?utm_medium=listing&utm_source=github)<br/>&nbsp;&nbsp;[ASP.NET&nbsp;Core](https://www.syncfusion.com/aspnet-core-ui-controls?utm_medium=listing&utm_source=github)&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/netmvc.svg" height="50" />](https://www.syncfusion.com/aspnet-mvc-ui-controls?utm_medium=listing&utm_source=github)<br/>&nbsp;&nbsp;[ASP.NET&nbsp;MVC](https://www.syncfusion.com/aspnet-mvc-ui-controls?utm_medium=listing&utm_source=github)&nbsp;&nbsp; | 
+| [<img src="https://ej2.syncfusion.com/github/images/angular-new.svg" height="50" />](https://www.syncfusion.com/angular-components?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Angular](https://www.syncfusion.com/angular-components?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)&nbsp;&nbsp;&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/react.svg"  height="50" />](https://www.syncfusion.com/react-components?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[React](https://www.syncfusion.com/react-components?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/vue.svg" height="50" />](https://www.syncfusion.com/vue-components?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Vue](https://www.syncfusion.com/vue-components?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/netcore.svg" height="50" />](https://www.syncfusion.com/aspnet-core-ui-controls?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)<br/>&nbsp;&nbsp;[ASP.NET&nbsp;Core](https://www.syncfusion.com/aspnet-core-ui-controls?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)&nbsp;&nbsp; | [<img src="https://ej2.syncfusion.com/github/images/netmvc.svg" height="50" />](https://www.syncfusion.com/aspnet-mvc-ui-controls?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)<br/>&nbsp;&nbsp;[ASP.NET&nbsp;MVC](https://www.syncfusion.com/aspnet-mvc-ui-controls?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)&nbsp;&nbsp; | 
 | :-----: | :-----: | :-----: | :-----: | :-----: |
 
 ## 🏗️ Showcase samples
@@ -108,7 +108,7 @@ Rich Text Editor control is also offered in following list of frameworks.
 
 * [Checklist Suport](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/tools.html) - Allows users to create checklists (to-do lists) directly within the editor. Users can easily add interactive checkbox items to their content.
 
-* [Accessibility & WCAG 2.0 Compliance](https://ej2.syncfusion.com/documentation/rich-text-editor/accessibility/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - Ensures full accessibility support, making it user-friendly for people who rely on assistive technologies (AT) or keyboard navigation.
+* [Accessibility & WCAG 2.0 Compliance](https://ej2.syncfusion.com/documentation/rich-text-editor/accessibility?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - Ensures full accessibility support, making it user-friendly for people who rely on assistive technologies (AT) or keyboard navigation.
 
 * [Preventing Cross-Site Scripting (XSS)](https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/prevent-cross-site-scripting/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - The Rich Text Editor allows users to edit the content with security by preventing cross-site scripting (XSS).
 
@@ -124,28 +124,28 @@ Rich Text Editor control is also offered in following list of frameworks.
 
 * [Export and Import](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/export-word.html) - Supports exporting content to PDF, and Word formats.
 
-* [Copy and paste](https://ej2.syncfusion.com/documentation/rich-text-editor/paste-cleanup/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm") - Copy and paste from Microsoft Word, Outlook, or other editors or sources while preserving formatting, styles, and structure.
+* [Copy and paste](https://ej2.syncfusion.com/documentation/rich-text-editor/paste-cleanup?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) - Copy and paste from Microsoft Word, Outlook, or other editors or sources while preserving formatting, styles, and structure.
 
-* [Undo and redo](https://ej2.syncfusion.com/documentation/rich-text-editor/miscellaneous.html?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#undoredo-manager) - Users can use undo and redo actions to reverse or repeat actions they took while editing the content.
+* [Undo and redo](https://ej2.syncfusion.com/documentation/rich-text-editor/undo-redo?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) - Users can use undo and redo actions to reverse or repeat actions they took while editing the content.
 
-* [Module injection](https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#module-injection) - It is possible to create a editor that utilizes a modular library to load the necessary functionality on demand. This can be useful for optimizing the performance of the editor.
+* [Module injection](https://ej2.syncfusion.com/documentation/rich-text-editor/module?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) - It is possible to create a editor that utilizes a modular library to load the necessary functionality on demand. This can be useful for optimizing the performance of the editor.
 
-* [Third-party integration](https://ej2.syncfusion.com/documentation/rich-text-editor/third-party-integration/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) - It is possible to integrate a third-party library into a rich text editor to add additional functionality or features to the editor like `Code-mirror`, `Embedly` and more.
+* [Third-party integration](https://ej2.syncfusion.com/documentation/rich-text-editor/third-party-integration?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) - It is possible to integrate a third-party library into a rich text editor to add additional functionality or features to the editor like `Code-mirror`, `Embedly` and more.
 
 ## 📚 Resources
 
-* [Documentation](https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started)
-* [Theme Studio](https://ej2.syncfusion.com/themestudio/)
-* [Custom Resource Generator](https://crg.syncfusion.com/)
-* [What's New](https://www.syncfusion.com/products/whatsnew/essential-js2?utm_medium=listing&utm_source=github)
-* [Road Map](https://www.syncfusion.com/products/roadmap/essential-js2?utm_medium=listing&utm_source=github)
-* [E-Books](https://www.syncfusion.com/ebooks?tag=javascript&utm_medium=listing&utm_source=github)
+* [Documentation](https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
+* [Theme Studio](https://ej2.syncfusion.com/themestudio/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
+* [Custom Resource Generator](https://crg.syncfusion.com/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
+* [What's New](https://www.syncfusion.com/products/whatsnew/essential-js2?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
+* [Road Map](https://www.syncfusion.com/products/roadmap/essential-js2?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
+* [E-Books](https://www.syncfusion.com/succinctly-free-ebooks?tag=javascript?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
 
 ## 🤝 Support
 
 Product support is available through the following mediums.
 
-* [Support ticket](https://support.syncfusion.com/support/tickets/create) - Guaranteed Response in 24 hours | Unlimited tickets | Holiday support
+* [Support ticket](https://support.syncfusion.com/support/tickets/create?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - Guaranteed Response in 24 hours | Unlimited tickets | Holiday support
 * [Community forum](https://www.syncfusion.com/forums/essential-js2?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
 * [GitHub issues](https://github.com/syncfusion/ej2-javascript-ui-controls/issues/new)
 * [Request feature or report bug](https://www.syncfusion.com/feedback/javascript?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm)
@@ -157,9 +157,9 @@ Check the changelog [here](https://github.com/syncfusion/ej2-javascript-ui-contr
 
 ## ⚖️ License and copyright
 
-> This is a commercial product and requires a paid license for possession or use. Syncfusion<sup>®</sup> licensed software, including this component, is subject to the terms and conditions of Syncfusion<sup>®</sup> [EULA](https://www.syncfusion.com/eula/es/). To acquire a license for 140+ [JavaScript UI controls](https://www.syncfusion.com/javascript-ui-controls), you can [purchase](https://www.syncfusion.com/sales/products) or [start a free 30-day trial](https://www.syncfusion.com/account/manage-trials/start-trials).
+> This is a commercial product and requires a paid license for possession or use. Syncfusion<sup>®</sup> licensed software, including this component, is subject to the terms and conditions of Syncfusion<sup>®</sup> [EULA](https://www.syncfusion.com/license/studio/33.2.3/syncfusion_essential_studio_eula.pdf?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm). To acquire a license for 155+ [JavaScript UI controls](https://www.syncfusion.com/javascript-ui-controls?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm), you can [purchase](https://www.syncfusion.com/sales/pricing?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) or [start a free 30-day trial](https://www.syncfusion.com/account/manage-trials/start-trials?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm).
 
-> A [free community license](https://www.syncfusion.com/products/communitylicense) is also available for companies and individuals whose organizations have less than $1 million USD in annual gross revenue and five or fewer developers.
+> A [free community license](https://www.syncfusion.com/products/communitylicense?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) is also available for companies and individuals whose organizations have less than $1 million USD in annual gross revenue and five or fewer developers.
 
 See [LICENSE FILE](https://github.com/syncfusion/ej2/blob/master/license?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) for more info.
 
