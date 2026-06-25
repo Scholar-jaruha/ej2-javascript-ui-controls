@@ -5,7 +5,7 @@
 The [JavaScript RichTextEditor](https://www.syncfusion.com/javascript-ui-controls/js-wysiwyg-rich-text-editor?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) is a feature-rich WYSIWYG HTML editor and Markdown editor. The Rich Text Editor is widely used to create blogs, forum posts, notes sections, comment sections, messaging applications, and more. The control provides an efficient user interface for a better editing experience with mobile support. It has a variety of tools to edit and format rich content, and it return a valid HTML markup or Markdown (MD) content. It allows users to insert images, links, tables, media files and lists with modular architectures.
 
 <div align="center">
-  <h4> <a href="https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm">📖Getting started</a> &#x2022; 
+  <h4> <a href="https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm">📖Getting started</a> &#x2022; 
     <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm#/bootstrap5/rich-text-editor/tools.html">🚀Online demos</a> &#x2022; 
     <a href="https://www.syncfusion.com/javascript-ui-controls/js-wysiwyg-rich-text-editor?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm">🌐Learn more</a>
     </h4>
@@ -81,7 +81,7 @@ Now, open your project in a browser, and the Rich Text Editor will be displayed!
 
 <blockquote>
     <p>ℹ️ <b>Note:</b></p>
-    <span>For more information on using Rich Text Editor with Syncfusion, refer to our <a href="https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm">Documentation</a>.</span>
+    <span>For more information on using Rich Text Editor with Syncfusion, refer to our <a href="https://ej2.syncfusion.com/documentation/rich-text-editor/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm">Documentation</a>.</span>
 </blockquote>
 
 ## 🛠️ Supported frameworks

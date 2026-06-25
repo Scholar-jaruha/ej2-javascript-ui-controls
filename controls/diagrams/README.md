@@ -5,7 +5,7 @@
 The [JavaScript Diagram](https://www.syncfusion.com/javascript-ui-controls/js-diagram?utm_source=npm&utm_medium=listing&utm_campaign=javascript-diagram-npm) control is used for visualizing, creating, and editing interactive diagrams. It supports creating flowcharts, organizational charts, mind maps, floor plans, UML diagrams, and BPMN charts either through code or a visual interface.
 
 <p align="center">
-    <a href="https://ej2.syncfusion.com/documentation/diagram/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-diagram-npm">Getting started</a> . 
+    <a href="https://ej2.syncfusion.com/documentation/diagram/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-diagram-npm">Getting started</a> . 
     <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-diagram-npm#/bootstrap5/diagram/default-functionalities.html">Online demos</a> . 
     <a href="https://www.syncfusion.com/javascript-ui-controls/js-diagram?utm_source=npm&utm_medium=listing&utm_campaign=javascript-diagram-npm">Learn more</a>
 </p>

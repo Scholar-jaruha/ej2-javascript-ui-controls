@@ -13,7 +13,7 @@ The [JavaScript Charts](https://www.syncfusion.com/javascript-ui-controls/js-cha
 The [JavaScript Chart Component](https://www.syncfusion.com/javascript-ui-controls/javascript-charts) is a feature-rich chart control with built-in support for over 50 chart types, technical indictors, trendline, zooming, tooltip, selection, crosshair and trackball. 
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/chart/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/chart/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/chart/line.html">Online demos</a> .
    <a href="https://www.syncfusion.com/javascript-ui-controls/js-charts?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
@@ -50,15 +50,15 @@ The [JavaScript Chart Component](https://www.syncfusion.com/javascript-ui-contro
 * [Export](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/chart/export.html): Provides the options to Export the chart to  PDF, SVG and CSV formats.
 * [RTL support](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/chart/right-to-left.html): Provides a full-fledged right-to-left mode which aligns axis, tooltip, legend and data in the chart component from right to left.
 * [Appearance](https://ej2.syncfusion.com/documentation/chart/chart-appearance?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm): Colors for the charts are picked by the built-in theme, but each element of the chart can be customized by simple configuration options.
-* [Accessibility](https://ej2.syncfusion.com/documentation/chart/accessibility#wai-aria?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm): Designed to be accessible to users with disabilities, with features such as WAI-ARIA standard compliance and keyboard navigation to ensure that the chart can be effectively used with assistive technologies such as screen readers.
-* [Localization](https://ej2.syncfusion.com/documentation/chart/localization#localization?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm): The Localization library enables you to adapt the default text content of the chart to fit the language and cultural preferences of your target audience.
+* [Accessibility](https://ej2.syncfusion.com/documentation/chart/accessibility?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#wai-aria): Designed to be accessible to users with disabilities, with features such as WAI-ARIA standard compliance and keyboard navigation to ensure that the chart can be effectively used with assistive technologies such as screen readers.
+* [Localization](https://ej2.syncfusion.com/documentation/chart/localization?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#localization): The Localization library enables you to adapt the default text content of the chart to fit the language and cultural preferences of your target audience.
 
 ### JavaScript Accumulation Chart
 
 Built-in support for pie, doughnut, pyramid and funnel series type, to show the proportions and percentages between the categories.
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/accumulation-chart/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/accumulation-chart/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/chart/default-pie.html">Online demos</a> .
    <a href="https://www.syncfusion.com/products/javascript/chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
@@ -86,7 +86,7 @@ Built-in support for pie, doughnut, pyramid and funnel series type, to show the 
 The [JavaScript Stock Chart](https://www.syncfusion.com/javascript-ui-controls/js-stock-chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm) is a well-crafted, easy-to-use financial charting package to track and visualize stock price of any company over a specific period using charting and range tools.
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/stock-chart/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/stock-chart/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/stock-chart/default.html">Online demos</a> .
    <a href="https://www.syncfusion.com/javascript-ui-controls/js-stock-chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
@@ -104,7 +104,7 @@ The [JavaScript Stock Chart](https://www.syncfusion.com/javascript-ui-controls/j
 * [Trendlines](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/stock-chart/default): Predicts the future trends with predetermined data for any measurements.
 * [Stock events](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/stock-chart/stock-events): Supports stock events to show different kinds of market events on the chart.
 * [Export](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/stock-chart/default): Provides the options to Export the stock chart to  PDF, SVG and CSV formats.
-* [Appearance](https://ej2.syncfusion.com/documentation/stock-chart/appearance/): Colors for the stock chart are picked by the built-in theme, but each element of the stock chart can be customized by simple configuration options.
+* [Appearance](https://ej2.syncfusion.com/documentation/stock-chart/appearance?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm): Colors for the stock chart are picked by the built-in theme, but each element of the stock chart can be customized by simple configuration options.
 * [Tooltip](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/stock-chart/default): Provides great user experiance by including a set of interactive features such as tooltip, events, and trackball.
 
 ### JavaScript Range Navigator
@@ -112,7 +112,7 @@ The [JavaScript Stock Chart](https://www.syncfusion.com/javascript-ui-controls/j
 The [JavaScript Range Navigator](https://www.syncfusion.com/javascript-ui-controls/js-range-seletor?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm) control is an interface for selecting a small range from a large collection. It is commonly used in financial dashboards to filter a date range for data that needs to be visualized.
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/range-navigator/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/range-navigator/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/range-navigator/default.html">Online demos</a> .
    <a href="https://www.syncfusion.com/javascript-ui-controls/js-range-selector?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
@@ -134,7 +134,7 @@ The [JavaScript Range Navigator](https://www.syncfusion.com/javascript-ui-contro
 The [JavaScript Sparkline](https://www.syncfusion.com/javascript-ui-controls/js-sparkline?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm) is a very small chart control drawn without axes or coordinates. The sparklines are easy to interpret and convey more information to users by visualizing data in a small amount of space.
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/sparkline/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/sparkline/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/sparkline/default.html">Online demos</a> .
    <a href="https://www.syncfusion.com/javascript-ui-controls/js-sparkline?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
@@ -156,7 +156,7 @@ The [JavaScript Sparkline](https://www.syncfusion.com/javascript-ui-controls/js-
 The [JavaScript Bullet Chart](https://www.syncfusion.com/javascript-ui-controls/js-bullet-chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm) is an interface  to visually compare measures, similar to the commonly used bar chart. A bullet chart displays one or more measures and compares them with a target value.
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/bullet-chart/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/bullet-chart/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/bullet-chart/default.html">Online demos</a> .
    <a href="https://www.syncfusion.com/javascript-ui-controls/js-bullet-chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
@@ -177,7 +177,7 @@ The [JavaScript Bullet Chart](https://www.syncfusion.com/javascript-ui-controls/
 The [JavaScript Smith Chart](https://www.syncfusion.com/javascript-ui-controls/js-smith-chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm)  visualize data of high frequency circuit applications. It contains two sets of circles to plot parameters of transmission lines.
 
 <p align="center">
-   <a href="https://ej2.syncfusion.com/documentation/smithchart/getting-started/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
+   <a href="https://ej2.syncfusion.com/documentation/smithchart/getting-started?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Getting started</a> .
    <a href="https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm#/tailwind3/smith-chart/default.html">Online demos</a> .
    <a href="https://www.syncfusion.com/javascript-ui-controls/js-smith-chart?utm_source=npm&utm_medium=listing&utm_campaign=javascript-chart-npm">Learn more</a>
 </p>
