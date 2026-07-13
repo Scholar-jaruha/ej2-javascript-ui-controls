@@ -153,7 +153,7 @@ export class Link {
                 const linkTop: number = target.getBoundingClientRect().top;
                 const linkLeft: number = target.getBoundingClientRect().left;
                 const linkPos: number = linkTop - parentTop;
-                const tbHeight: number = (tbElement) ? (tbElement.offsetHeight + this.parent.toolbarModule.getExpandTBarPopHeight()) : 0;
+                const tbHeight: number = (tbElement) ? tbElement.offsetHeight : 0;
                 pageX = (this.parent.iframeSettings.enable) ? parentLeft + linkLeft : target.getBoundingClientRect().left;
                 pageY = window.pageYOffset + ((this.parent.iframeSettings.enable) ?
                     (parentTop + tbHeight + linkTop) : (parentTop + linkPos));
@@ -636,15 +636,26 @@ export class Link {
             // eslint-disable-next-line
             !closest(target, '[id=' + "'" + this.dialogObj.element.id + "'" + ']') && this.parent.toolbarSettings.enable &&
             this.parent.getToolbarElement() && !this.parent.getToolbarElement().contains(e.target as Node)) ||
-            (((this.parent.getToolbarElement() && this.parent.getToolbarElement().contains(e.target as Node)) ||
-            this.parent.inlineMode.enable && !closest(target, '#' + this.dialogObj.element.id)) &&
+            (this.parent.getToolbarElement() && this.parent.getToolbarElement().contains(e.target as Node)) &&
              !closest(target, '#' + this.parent.getID() + '_toolbar_CreateLink') &&
-                !target.querySelector('#' + this.parent.getID() + '_toolbar_CreateLink')))
+                !target.querySelector('#' + this.parent.getID() + '_toolbar_CreateLink'))
         ) {
-            this.parent.notify(events.documentClickClosedBy, { closedBy: 'outside click' });
+            // Scrollbar click detection:
+            // offsetX/offsetY gives the click position relative to the target element.
+            // clientWidth/clientHeight gives the visible content area size, excluding scrollbars.
+            // If the click position exceeds clientWidth or clientHeight, it landed on a scrollbar — skip closing the dialog.
+            const clickTarget: HTMLElement = e.target as HTMLElement;
+            const hasValidMeasurements: boolean = !!(e.offsetX && e.offsetY && clickTarget.clientWidth && clickTarget.clientHeight);
+            const isClickInsideContentArea: boolean = e.offsetX <= clickTarget.clientWidth && e.offsetY <= clickTarget.clientHeight;
+            if (!hasValidMeasurements || isClickInsideContentArea) {
+                this.parent.notify(events.documentClickClosedBy, { closedBy: 'outside click' });
+                this.dialogObj.hide({ returnValue: true } as Event);
+                this.parent.isBlur = true;
+                dispatchEvent(this.parent.element, 'focusout');
+            }
+        }
+        if (this.parent.inlineMode.enable && target && this.dialogObj && !closest(target, '#' + this.dialogObj.element.id)) {
             this.dialogObj.hide({ returnValue: true } as Event);
-            this.parent.isBlur = true;
-            dispatchEvent(this.parent.element, 'focusout');
         }
     }
     /**

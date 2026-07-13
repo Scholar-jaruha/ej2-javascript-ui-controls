@@ -1,8 +1,8 @@
 import { _PdfCrossReference } from './../pdf-cross-reference';
 import { PdfPage, PdfDestination, _PdfDestinationHelper } from './../pdf-page';
 import { _PdfDictionary, _PdfName, _PdfReference } from './../pdf-primitives';
-import { PdfFormFieldVisibility, _PdfCheckFieldState, PdfAnnotationFlag, PdfBorderStyle, PdfHighlightMode, PdfLineCaptionType, PdfLineEndingStyle, PdfLineIntent, PdfRotationAngle, PdfTextAlignment , PdfBorderEffectStyle, PdfMeasurementUnit, _PdfGraphicsUnit, PdfCircleMeasurementType, PdfRubberStampAnnotationIcon, PdfCheckBoxStyle, PdfTextMarkupAnnotationType, PdfPopupIcon, PdfAnnotationState, PdfAnnotationStateModel, PdfAttachmentIcon, PdfAnnotationIntent, _PdfAnnotationType, PdfBlendMode, PdfDashStyle, PdfLineCap, PathPointType, _PdfColorSpace} from './../enumerator';
-import { _checkField, _removeDuplicateReference, _updateVisibility, _checkComment, _checkReview, _mapAnnotationStateModel, _mapAnnotationState, _decode, _setMatrix, _convertToColor, _findPage, _getItemValue, _areNotEqual, _calculateBounds, _parseColor, _mapHighlightMode, _reverseMapHighlightMode, _getUpdatedBounds, _mapBorderStyle, _mapLineEndingStyle, _reverseMapEndingStyle, _toRectangle, _mapBorderEffectStyle, _getStateTemplate, _mapMeasurementUnit, _mapGraphicsUnit, _stringToStyle, _styleToString, _mapMarkupAnnotationType, _reverseMarkupAnnotationType, _reverseMapAnnotationState, _reverseMapAnnotationStateModel, _mapPopupIcon, _mapRubberStampIcon, _mapAttachmentIcon, _mapAnnotationIntent, _reverseMapPdfFontStyle, _fromRectangle, _getNewGuidString, _getFontStyle, _mapFont, _checkInkPoints, _updateBounds, _isNullOrUndefined, _obtainFontDetails, _areArrayEqual, _arePointsNotEqual, _convertToPoints, _isPointArray, _convertPointsToNumberArrays, _convertNumberToPointArrays, _convertNumberArraysToPoints, _convertPointToNumberArray, _pad2 } from './../utils';
+import { PdfFormFieldVisibility, _PdfCheckFieldState, PdfAnnotationFlag, PdfBorderStyle, PdfHighlightMode, PdfLineCaptionType, PdfLineEndingStyle, PdfLineIntent, PdfRotationAngle, PdfTextAlignment , PdfBorderEffectStyle, PdfMeasurementUnit, _PdfGraphicsUnit, PdfCircleMeasurementType, PdfRubberStampAnnotationIcon, PdfCheckBoxStyle, PdfTextMarkupAnnotationType, PdfPopupIcon, PdfAnnotationState, PdfAnnotationStateModel, PdfAttachmentIcon, PdfAnnotationIntent, _PdfAnnotationType, PdfBlendMode, PdfDashStyle, PdfLineCap, PathPointType, _PdfColorSpace, DataFormat} from './../enumerator';
+import { _checkField, _removeDuplicateReference, _updateVisibility, _checkComment, _checkReview, _mapAnnotationStateModel, _mapAnnotationState, _decode, _setMatrix, _convertToColor, _findPage, _getItemValue, _areNotEqual, _calculateBounds, _parseColor, _mapHighlightMode, _reverseMapHighlightMode, _getUpdatedBounds, _mapBorderStyle, _mapLineEndingStyle, _reverseMapEndingStyle, _toRectangle, _mapBorderEffectStyle, _getStateTemplate, _mapMeasurementUnit, _mapGraphicsUnit, _stringToStyle, _styleToString, _mapMarkupAnnotationType, _reverseMarkupAnnotationType, _reverseMapAnnotationState, _reverseMapAnnotationStateModel, _mapPopupIcon, _mapRubberStampIcon, _mapAttachmentIcon, _mapAnnotationIntent, _reverseMapPdfFontStyle, _fromRectangle, _getNewGuidString, _getFontStyle, _mapFont, _checkInkPoints, _updateBounds, _isNullOrUndefined, _obtainFontDetails, _areArrayEqual, _arePointsNotEqual, _convertToPoints, _isPointArray, _convertPointsToNumberArrays, _convertNumberToPointArrays, _convertNumberArraysToPoints, _convertPointToNumberArray, _pad2, _getPageIndex, _stringToBytes } from './../utils';
 import { PdfField, PdfTextBoxField, PdfRadioButtonListField, _PdfDefaultAppearance, PdfListBoxField, PdfCheckBoxField, PdfComboBoxField } from './../form/field';
 import { PdfTemplate } from './../graphics/pdf-template';
 import { _TextRenderingMode, PdfBrush, PdfGraphics, PdfPen, PdfGraphicsState, _PdfTransformationMatrix, _PdfUnitConvertor } from './../graphics/pdf-graphics';
@@ -19,6 +19,9 @@ import { PdfLayer } from '../layers/layer';
 import { PdfLayerCollection } from '../layers/layer-collection';
 import { _ContentParser, _PdfRecord } from '../content-parser';
 import { Rectangle, Point, PdfColor, Size } from './../pdf-type';
+import { _XfdfDocument } from './../import-export/xfdf-document';
+import { _JsonDocument } from './../import-export/json-document';
+import { _XmlWriter } from './../import-export/xml-writer';
 /**
  * Represents the base class for annotation objects.
  * ```typescript
@@ -1439,6 +1442,162 @@ export abstract class PdfAnnotation {
         }
     }
     /**
+     * Exports a single annotation to the specified format (XFDF or JSON).
+     *
+     * @private
+     * @param {DataFormat} format The format to export (DataFormat.xfdf or DataFormat.json).
+     * @returns {Uint8Array} Exported annotation data as byte array.
+     */
+    _export(format: DataFormat): Uint8Array {
+        if (!this._page || !this._dictionary) {
+            throw new Error('Annotation must be added to a page before export.');
+        }
+        const document: PdfDocument = this._crossReference._document;
+        let pageIndex: number;
+        if (this._dictionary && this._dictionary.has('P')) {
+            const pageDictionary: _PdfDictionary = this._dictionary.get('P');
+            pageIndex = _getPageIndex(document, pageDictionary);
+        } else {
+            pageIndex = this._page._pageIndex;
+        }
+        if (format === DataFormat.xfdf) {
+            return this._exportAsXfdf(document, pageIndex);
+        } else if (format === DataFormat.json) {
+            return this._exportAsJson(document, pageIndex);
+        } else {
+            throw new Error('Unsupported export format. Use DataFormat.xfdf or DataFormat.json.');
+        }
+    }
+    /**
+     * Exports the annotation as XFDF format.
+     *
+     * @private
+     * @param {PdfDocument} document The PDF document.
+     * @param {number} pageIndex The page index.
+     * @returns {Uint8Array} XFDF data as byte array.
+     */
+    _exportAsXfdf(document: PdfDocument, pageIndex: number): Uint8Array {
+        const helper: _XfdfDocument = new _XfdfDocument();
+        helper.exportAppearance = true;
+        helper._document = document;
+        helper._crossReference = document._crossReference;
+        this._crossReference = document._crossReference;
+        helper._isAnnotationExport = true;
+        const writer: _XmlWriter = new _XmlWriter();
+        writer._writeStartDocument();
+        writer._writeStartElement('xfdf');
+        writer._writeAttributeString(null, 'http://ns.adobe.com/xfdf/', 'xmlns', null);
+        writer._writeAttributeString('space', 'preserve', 'xml', null);
+        writer._writeStartElement('annots');
+        this._doPostProcess(false);
+        helper._exportAnnotationData(this, writer, pageIndex);
+        const annotation: any = this as any; // eslint-disable-line
+        if (annotation && annotation.reviewHistory && annotation.reviewHistory.count > 0) {
+            for (let i: number = 0; i < annotation.reviewHistory.count; i++) {
+                const reply: PdfPopupAnnotation = annotation.reviewHistory.at(i);
+                reply._page = this._page;
+                reply._doPostProcess(false);
+                helper._exportAnnotationData(reply, writer, pageIndex);
+            }
+        }
+        if (annotation && annotation.comments && annotation.comments.count > 0) {
+            for (let i: number = 0; i < annotation.comments.count; i++) {
+                const comment: PdfPopupAnnotation = annotation.comments.at(i);
+                comment._page = this._page;
+                comment._doPostProcess(false);
+                helper._exportAnnotationData(comment, writer, pageIndex);
+                const commentAnnotation: any = comment as any; // eslint-disable-line
+                if (commentAnnotation && commentAnnotation.reviewHistory && commentAnnotation.reviewHistory.count > 0) {
+                    for (let j: number = 0; j < commentAnnotation.reviewHistory.count; j++) {
+                        const nestedReply: PdfPopupAnnotation = commentAnnotation.reviewHistory.at(j);
+                        nestedReply._page = this._page;
+                        nestedReply._doPostProcess(false);
+                        helper._exportAnnotationData(nestedReply, writer, pageIndex);
+                    }
+                }
+            }
+        }
+        writer._writeEndElement();
+        if (!helper._asPerSpecification) {
+            writer._writeStartElement('f');
+            writer._writeAttributeString('href', helper._fileName || '');
+            writer._writeEndElement();
+        }
+        writer._writeEndElement();
+        const result: Uint8Array = writer._save();
+        writer._destroy();
+        return result;
+    }
+    /**
+     * Exports the annotation as JSON format.
+     *
+     * @private
+     * @param {PdfDocument} document The PDF document.
+     * @param {number} pageIndex The page index.
+     * @returns {Uint8Array} JSON data as byte array.
+     */
+    _exportAsJson(document: PdfDocument, pageIndex: number): Uint8Array {
+        const helper: _JsonDocument = new _JsonDocument();
+        helper.exportAppearance = true;
+        helper._document = document;
+        helper._crossReference = document._crossReference;
+        this._crossReference = document._crossReference;
+        helper._isAnnotationExport = true;
+        const json: any = { // eslint-disable-line
+            pdfAnnotation: {
+                [pageIndex]: {
+                    shapeAnnotation: []
+                }
+            }
+        };
+        this._doPostProcess(false);
+        helper._table.clear();
+        helper._exportAnnotation(this, pageIndex);
+        json.pdfAnnotation[<number>pageIndex].shapeAnnotation.push(
+            JSON.parse(helper._convertToJson(helper._table))
+        );
+        const annotation: any = this as any; // eslint-disable-line
+        if (annotation && annotation.reviewHistory && annotation.reviewHistory.count > 0) {
+            for (let i: number = 0; i < annotation.reviewHistory.count; i++) {
+                const reply: PdfPopupAnnotation = annotation.reviewHistory.at(i);
+                reply._page = this._page;
+                reply._doPostProcess(false);
+                helper._table.clear();
+                helper._exportAnnotation(reply, pageIndex);
+                json.pdfAnnotation[<number>pageIndex].shapeAnnotation.push(
+                    JSON.parse(helper._convertToJson(helper._table))
+                );
+            }
+        }
+        if (annotation && annotation.comments && annotation.comments.count > 0) {
+            for (let i: number = 0; i < annotation.comments.count; i++) {
+                const comment: PdfPopupAnnotation = annotation.comments.at(i);
+                comment._page = this._page;
+                comment._doPostProcess(false);
+                helper._table.clear();
+                helper._exportAnnotation(comment, pageIndex);
+                json.pdfAnnotation[<number>pageIndex].shapeAnnotation.push(
+                    JSON.parse(helper._convertToJson(helper._table))
+                );
+                const commentAnnotation: any = comment as any; // eslint-disable-line
+                if (commentAnnotation && commentAnnotation.reviewHistory && commentAnnotation.reviewHistory.count > 0) {
+                    for (let j: number = 0; j < commentAnnotation.reviewHistory.count; j++) {
+                        const nestedReply: PdfPopupAnnotation = commentAnnotation.reviewHistory.at(j);
+                        nestedReply._page = this._page;
+                        nestedReply._doPostProcess(false);
+                        helper._table.clear();
+                        helper._exportAnnotation(nestedReply, pageIndex);
+                        json.pdfAnnotation[<number>pageIndex].shapeAnnotation.push(
+                            JSON.parse(helper._convertToJson(helper._table))
+                        );
+                    }
+                }
+            }
+        }
+        const jsonString: string = JSON.stringify(json);
+        return _stringToBytes(jsonString) as Uint8Array;
+    }
+    /**
      * Initializes the annotation with its owning page and dictionary,
      * assigning cross reference information and setting the page reference
      * when loading a new annotation instance.
@@ -1719,6 +1878,13 @@ export abstract class PdfAnnotation {
             }
         }
         if (typeof currentBounds !== 'undefined' && currentBounds !== null) {
+            if (this._page && typeof this._page._getTemplateReservedSpace === 'function') {
+                const reserved: number[] = this._page._getTemplateReservedSpace();
+                if (reserved && Array.isArray(reserved) && reserved.length === 4) {
+                    currentBounds.x += reserved[3];
+                    currentBounds.y -= reserved[0];
+                }
+            }
             const state: PdfGraphicsState = graphics.save();
             this._page._needInitializeGraphics = true;
             if (this._type === _PdfAnnotationType.rubberStampAnnotation) {
@@ -2329,7 +2495,7 @@ export abstract class PdfAnnotation {
             template = this._customTemplate.get('N');
         } else {
             template = new PdfTemplate(nativeBounds, this._crossReference);
-            _setMatrix(template, this._getRotationAngle());
+            _setMatrix(template, this._getRotationAngle(), this);
             if (this._dictionary.has('BE')) {
                 template._writeTransformation = false;
             }
@@ -9646,7 +9812,7 @@ export class PdfInkAnnotation extends PdfComment {
                 const appearance: PdfAppearance = new PdfAppearance(nativeRectangle, this);
                 appearance.normal = new PdfTemplate(nativeRectangle, this._crossReference);
                 const template: PdfTemplate = appearance.normal;
-                _setMatrix(template, this._getRotationAngle());
+                _setMatrix(template, this._getRotationAngle(), this);
                 template._writeTransformation = false;
                 this._appearanceTemplate = this._createInkAppearance(template);
                 this._appearanceTemplate._content.dictionary._updated = true;
@@ -9743,7 +9909,7 @@ export class PdfInkAnnotation extends PdfComment {
                     }
                     const rect: number[] = this._getInkBoundsValue();
                     const template: PdfTemplate = new PdfTemplate(rect, this._crossReference);
-                    _setMatrix(template, this._getRotationAngle());
+                    _setMatrix(template, this._getRotationAngle(), this);
                     template._writeTransformation = false;
                     this._appearanceTemplate = this._createInkAppearance(template);
                     this._dictionary.update('Rect', [rect[0], rect[1], rect[0] + rect[2], rect[1] + rect[3]]);
@@ -15924,6 +16090,7 @@ export class PdfFreeTextAnnotation extends PdfComment {
             format.lineAlignment = PdfVerticalAlignment.top;
             format.alignment = alignment;
             format.lineSpacing = 0;
+            format.lineLimit = false;
             if (isRotation) {
                 g.drawString(text, font, parameter.bounds, parameter.backBrush, format);
             } else {

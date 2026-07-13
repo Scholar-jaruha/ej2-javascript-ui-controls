@@ -2,37 +2,15 @@
 
 ## [Unreleased]
 
-## 33.2.15 (2026-06-23)
+## 34.1.30 (2026-07-09)
 
 ### Ribbon
 
 #### Bug Fixes
 
-- `#I820214` - Now the issue with Ribbon split button popup opening unexpectedly when dynamically adding the 'e-active' class to highlight the split button has been resolved.
+- `#I831643` - Now the issue with Ribbon component `SplitButton` and `DropdownButton` popups render behind the Angular CDK Dialog overlay has been resolved.
 
-## 33.2.5 (2026-05-05)
-
-### Ribbon
-
-#### Bug Fixes
-
-- `#I831643` - Now the issue with Ribbon component popups render behind Angular CDK Dialog overlay has been resolved.
-
-## 33.2.4 (2026-04-28)
-
-### Ribbon
-
-#### Bug Fixes
-
-- `#I831323` - Now the issue with gallery popup position misalignment in overflow state has been resolved.
-
-## 33.1.49 (2026-04-14)
-
-### Ribbon
-
-#### Bug Fixes
-
-- Now the issue with tooltip not displayed for the overflow buttons in the Ribbon has been resolved.
+- Now the issue with gallery popup position misalignment in overflow state has been resolved.
 
 ## 25.1.35 (2024-03-15)
 

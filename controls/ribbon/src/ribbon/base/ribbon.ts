@@ -1,5 +1,5 @@
 import { addClass, append, Event, Collection, Complex, Component, EmitType, EventHandler, formatUnit, getInstance, getComponent, getUniqueID, closest, KeyboardEventArgs, KeyboardEvents } from '@syncfusion/ej2-base';
-import { INotifyPropertyChanged, isNullOrUndefined, isUndefined, ModuleDeclaration, NotifyPropertyChanges, Property, remove, removeClass, L10n } from '@syncfusion/ej2-base';
+import { INotifyPropertyChanged, isNullOrUndefined, isUndefined, L10n, ModuleDeclaration, NotifyPropertyChanges, Property, remove, removeClass } from '@syncfusion/ej2-base';
 import { Tab, TabAnimationSettings, TabAnimationSettingsModel, TabItemModel, SelectEventArgs, SelectingEventArgs, HScroll, Toolbar } from '@syncfusion/ej2-navigations';
 import { RibbonTab, RibbonTabModel, RibbonGroupModel, RibbonCollectionModel, RibbonItemModel, FileMenuSettings, FileMenuSettingsModel, BackStageMenu, BackStageMenuModel, RibbonItem, RibbonCollection, RibbonGroup, RibbonContextualTabSettingsModel, RibbonContextualTabSettings } from '../models/index';
 import { RibbonModel } from './ribbon-model';
@@ -293,7 +293,7 @@ export class Ribbon extends Component<HTMLElement> implements INotifyPropertyCha
      */
     public ribbonKeyTipModule: RibbonKeyTip;
 
-    private l10n: L10n;
+    private l10n : L10n;
     private itemIndex: number;
     private idIndex: number;
     private isAddRemove: boolean;
@@ -697,7 +697,7 @@ export class Ribbon extends Component<HTMLElement> implements INotifyPropertyCha
             const colorPickerPopups: NodeListOf<Element> = document.querySelectorAll('.e-ribbon .e-colorpicker-wrapper.e-ribbon-control.e-ribbon-open .e-colorpicker, .e-ribbon-group-overflow-ddb .e-colorpicker-wrapper.e-ribbon-control.e-ribbon-open .e-colorpicker');
             activePopups.forEach((popup: HTMLElement) => {
                 const dropDownBtn: DropDownButton = getInstance(popup as HTMLElement, DropDownButton) as DropDownButton;
-                if (dropDownBtn) {
+                if (dropDownBtn){
                     dropDownBtn.toggle();
                 }
             });
@@ -1184,6 +1184,10 @@ export class Ribbon extends Component<HTMLElement> implements INotifyPropertyCha
         if (dropDownPopup) {
             dropDownPopup.setProperties({ position: { X: isLeft ? 'left' : 'right', Y: isMenu ? 'top' : 'bottom' } }, true);
             if (isMenu) {
+                const target: HTMLElement = this.getAppendToElement();
+                if (dropdown && dropdown.dropDown && !target.contains(dropdown.dropDown.element)) {
+                    target.appendChild(dropdown.dropDown.element);
+                }
                 dropdown.beforeOpen = (e: BeforeOpenCloseMenuEventArgs): void => {
                     if (isLeft) {
                         if (item.type === RibbonItemType.Gallery && this.ribbonGalleryModule) {
@@ -4793,7 +4797,6 @@ export class Ribbon extends Component<HTMLElement> implements INotifyPropertyCha
         super.destroy();
         this.tabObj.destroy();
         this.tabObj = undefined;
-        this.l10n = null;
         this.initialPropsData = {};
         this.hiddenGroups = [];
         this.hiddenElements = {};

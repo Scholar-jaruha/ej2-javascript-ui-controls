@@ -1,7 +1,5 @@
-@use 'ej2-base/styles/definition/tailwind3' as *;
-@use 'ej2-buttons/styles/button/tailwind3-definition' as *;
-@forward 'ej2-base/styles/definition/tailwind3';
-@forward 'ej2-buttons/styles/button/tailwind3-definition';
+@use '@syncfusion/ej2-base/styles/common/base-variables' as *;
+
 $cpicker-split-btn-padding: 3px 8px !default;
 $cpicker-bigger-split-btn-padding: 7px 12px !default;
 $cpicker-split-line-height: 14px !default;
@@ -202,3 +200,4 @@ $color-slider-preview-previous-top: 20px !default;
 $color-picker-preview-tail-top: 10px !default;
 $color-float-text-font-size: 16px !default;
 $color-switch-ctrl-btn-height: 64px !default;
+$cpicker-media-width: 344px !default;

@@ -153,8 +153,7 @@ export class ViewSource {
             if (!actionBeginArgs.cancel) {
                 const tbItems: HTMLElement[] = selectAll('.' + CLS_TB_ITEM, this.parent.element);
                 this.contentModule = this.rendererFactory.getRenderer(RenderType.Content);
-                const height: number = this.parent.inputElement.getBoundingClientRect().height +
-                    this.parent.toolbarModule.getExpandTBarPopHeight();
+                const height: number = this.parent.inputElement.getBoundingClientRect().height;
                 this.parent.rootContainer.classList.add('e-source-code-enabled');
                 this.parent.notify(events.updateToolbarItem, {
                     targetItem: 'SourceCode', updateItem: 'Preview',
@@ -260,8 +259,8 @@ export class ViewSource {
                 }
                 this.unWireEvent();
                 this.wireBaseKeyDown();
-                this.parent.updateValue();
                 (this.contentModule.getEditPanel() as HTMLElement).focus();
+                this.parent.updateValue();
                 this.parent.trigger(events.actionComplete, { requestType: 'Preview', targetItem: 'Preview', args: args });
                 this.parent.formatter.enableUndo(this.parent);
                 this.parent.addAudioVideoWrapper();

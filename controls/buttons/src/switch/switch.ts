@@ -4,7 +4,7 @@ import { addClass, isRippleEnabled, removeClass, rippleEffect, isNullOrUndefined
 import { SwitchModel } from './switch-model';
 import { rippleMouseHandler, destroy, preRender, ChangeEventArgs, BeforeChangeEventArgs, setHiddenInput } from './../common/common';
 
-const DISABLED: string = 'e-switch-disabled';
+const DISABLED: string = 'e-switch-disabled e-disabled';
 const RIPPLE: string = 'e-ripple-container';
 const RIPPLE_CHECK: string = 'e-ripple-check';
 const RTL: string = 'e-rtl';
@@ -309,7 +309,7 @@ export class Switch extends Component<HTMLInputElement> implements INotifyProper
                     this.isWireEvents = false;
                 } else {
                     this.element.disabled = false;
-                    wrapper.classList.remove(DISABLED);
+                    wrapper.classList.remove(...DISABLED.split(' '));
                     wrapper.setAttribute('aria-disabled', 'false');
                     if (!this.isWireEvents) {
                         this.wireEvents();
@@ -359,6 +359,10 @@ export class Switch extends Component<HTMLInputElement> implements INotifyProper
         this.formElement = <HTMLFormElement>closest(this.element, 'form');
         this.tagName = this.element.tagName;
         preRender(this, 'EJS-SWITCH', WRAPPER, element, this.getModuleName());
+        if (element && element.hasAttribute('id') && this.isAngular && element.tagName === 'EJS-SWITCH') {
+            this.element.id = element.id;
+            element.removeAttribute('id');
+        }
     }
     /**
      * Initialize control rendering.
@@ -409,7 +413,7 @@ export class Switch extends Component<HTMLInputElement> implements INotifyProper
     private setDisabled(): void {
         const wrapper: Element = this.getWrapper() as Element;
         this.element.disabled = true;
-        wrapper.classList.add(DISABLED);
+        wrapper.classList.add(...DISABLED.split(' '));
         wrapper.setAttribute('aria-disabled', 'true');
     }
     private setLabel(onText: string, offText: string): void {

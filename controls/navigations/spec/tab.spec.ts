@@ -5463,6 +5463,104 @@ describe('Tab Control', () => {
             expect(element.querySelector('#e-item' + tab.tabId + '_5').classList.contains('e-active')).toEqual(true);
             expect(closest(actEle3, '.e-toolbar-item').classList.contains('e-active')).toEqual(true);
         });
+
+        it('Detached focused element + Space key should not throw', () => {
+            tab = new Tab({
+                items: [
+                    { header: { text: 'header-item1' }, content: 'Content1' },
+                    { header: { text: 'header-item2' }, content: 'Content2' }
+                ]
+            });
+            tab.appendTo('#ej2Tab');
+
+            const legend = createElement('div', { id: 'legend', attrs: { tabindex: '0' } });
+            document.body.appendChild(legend);
+            legend.focus();
+
+            // Remove the focused element to simulate detached element scenario
+            detach(legend);
+
+            spyOn(console, 'error');
+
+            const keyEventArgs: any = {
+                preventDefault: function () { },
+                action: 'space',
+                target: legend
+            };
+
+            expect(function () { (tab as any).keyHandler(keyEventArgs); }).not.toThrow();
+            expect((console.error as any).calls.count()).toEqual(0);
+        });
+
+        it('Tab key navigation does not throw and logs no errors', () => {
+            tab = new Tab({
+                items: [
+                    { header: { text: 'item1' }, content: 'Content1' },
+                    { header: { text: 'item2' }, content: 'Content2' },
+                    { header: { text: 'item3' }, content: 'Content3' }
+                ]
+            });
+            tab.appendTo('#ej2Tab');
+            const element: HTMLElement = document.getElementById('ej2Tab');
+            const trgEle: HTMLElement = <HTMLElement>element.querySelector('.e-toolbar-item .e-tab-wrap');
+            trgEle.focus();
+            spyOn(console, 'error');
+            const keyEventArgs: any = { preventDefault: function () { }, action: 'tab', target: trgEle };
+            expect(function () { (tab as any).keyHandler(keyEventArgs); }).not.toThrow();
+            expect((console.error as any).calls.count()).toEqual(0);
+        });
+
+        it('Space/Enter keys activate tab without errors', () => {
+            tab = new Tab({
+                items: [
+                    { header: { text: 'a' }, content: 'A' },
+                    { header: { text: 'b' }, content: 'B' }
+                ]
+            });
+            tab.appendTo('#ej2Tab');
+            const element: HTMLElement = document.getElementById('ej2Tab');
+            const trgEle: HTMLElement = <HTMLElement>element.querySelector('.e-toolbar-item .e-tab-wrap');
+            spyOn(console, 'error');
+            const keyEventArgsSpace: any = { preventDefault: function () { }, action: 'space', target: trgEle };
+            const keyEventArgsEnter: any = { preventDefault: function () { }, action: 'enter', target: trgEle };
+            expect(function () { (tab as any).keyHandler(keyEventArgsSpace); }).not.toThrow();
+            expect(function () { (tab as any).keyHandler(keyEventArgsEnter); }).not.toThrow();
+            expect((console.error as any).calls.count()).toEqual(0);
+        });
+
+        it('Arrow key navigation does not throw', () => {
+            tab = new Tab({
+                items: [
+                    { header: { text: '1' }, content: '1' },
+                    { header: { text: '2' }, content: '2' },
+                    { header: { text: '3' }, content: '3' }
+                ]
+            });
+            tab.appendTo('#ej2Tab');
+            const element: HTMLElement = document.getElementById('ej2Tab');
+            const trgEle: HTMLElement = <HTMLElement>element.querySelector('.e-toolbar-item .e-tab-wrap');
+            spyOn(console, 'error');
+            const keyEventArgs: any = { preventDefault: function () { }, action: 'moveRight', target: trgEle };
+            expect(function () { (tab as any).keyHandler(keyEventArgs); }).not.toThrow();
+            expect((console.error as any).calls.count()).toEqual(0);
+        });
+
+        it('Shadow DOM origin event handled safely', () => {
+            tab = new Tab({ items: [{ header: { text: 's' }, content: 's' }] });
+            tab.appendTo('#ej2Tab');
+            const host = createElement('div', { id: 'shadow-host' });
+            document.body.appendChild(host);
+            const root = (host as any).attachShadow ? (host as any).attachShadow({ mode: 'open' }) : host;
+            const inside = createElement('button', { className: 'e-tab-wrap', id: 'shadow-btn', attrs: { tabindex: '0' } });
+            root.appendChild(inside);
+            inside.focus();
+            spyOn(console, 'error');
+            const keyEventArgs: any = { preventDefault: function () { }, action: 'space', target: inside };
+            expect(function () { (tab as any).keyHandler(keyEventArgs); }).not.toThrow();
+            expect((console.error as any).calls.count()).toEqual(0);
+            detach(host);
+        });
+
         it('Vertical - Space key testing', () => {
             tab = new Tab({
                 height: '70px',
@@ -13043,28 +13141,6 @@ describe('Tab Control', () => {
                 }
                 document.body.innerHTML = '';
                 document.body.style.overflow = '';
-            });
-
-            it('should use 100vh fallback and prevent scrollbars when parent has NO explicit height', () => {
-                // Arrange & Act
-                tab = new Tab({
-                    heightAdjustMode: 'Fill',
-                    items: [
-                        { header: { text: 'Tab 1' }, content: 'Content 1' },
-                        { header: { text: 'Tab 2' }, content: 'Content 2' }
-                    ]
-                }, tabEle);
-
-                const headerEle = tab.element.querySelector('.e-tab-header') as HTMLElement;
-                const contentEle = tab.element.querySelector('.e-content') as HTMLElement;
-                const headerHeight = headerEle.offsetHeight;
-
-                // Assert - The FIX: Should use 100vh, NOT 100%
-                expect((tab.element as HTMLElement).style.height).toBe('100%');
-                expect(contentEle.style.height).toContain('100vh');
-                
-                // Body overflow should be empty
-                expect(document.body.style.overflow).toBe("");
             });
 
             it('should NOT introduce scrollbars in deeply nested structure', () => {

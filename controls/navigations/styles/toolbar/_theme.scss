@@ -1,4 +1,4 @@
-@use 'ej2-base/styles/common/mixin' as *;
+@use 'variables' as *;
 @include export-module('toolbar-theme') {
   /* stylelint-disable property-no-vendor-prefix */
   .e-toolbar {
@@ -137,6 +137,18 @@
         
           .e-icons {
             color: $tbar-default-icon-overlay;
+          }
+        }
+
+        &.e-template{
+          @if ($skin-name == 'fluent2'){
+            .e-tbar-btn-text {
+              color: $tbar-default-font-overlay;
+            }
+          
+            .e-icons {
+              color: $tbar-default-icon-overlay;
+            }
           }
         }
       }

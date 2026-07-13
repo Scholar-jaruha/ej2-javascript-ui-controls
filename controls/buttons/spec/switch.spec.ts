@@ -83,11 +83,13 @@ describe('Switch', () => {
             specSwitch = new Switch({disabled: true}, '#specSwitch');
             expect(element.disabled).toEqual(true);
             expect(element.parentElement.classList.contains('e-switch-disabled')).toEqual(true);
+            expect(element.parentElement.classList.contains('e-disabled')).toEqual(true);
         });
         it('Switch with disabled state false', () => {
             specSwitch = new Switch({ disabled: false }, '#specSwitch');
             expect(element.disabled).toEqual(false);
             expect(element.parentElement.classList.contains('e-switch-disabled')).toEqual(false);
+            expect(element.parentElement.classList.contains('e-disabled')).toEqual(false);
         });
         it('Switch with RTL', () => {
             specSwitch = new Switch({enableRtl: true}, '#specSwitch');
@@ -261,6 +263,17 @@ describe('Switch', () => {
             specSwitch = new Switch({ enablePersistence: true }, '#specSwitch');
             expect(specSwitch.enablePersistence).toEqual(true);
         });
+        it('should persist checked state after refresh when input id is stable', () => {
+            specSwitch = new Switch({ enablePersistence: true }, '#specSwitch');
+            // Toggle state
+            specSwitch.checked = true;
+            specSwitch.dataBind();
+            expect(specSwitch.checked).toBe(true);
+            // Simulate page refresh
+            specSwitch.destroy();
+            specSwitch = new Switch({ enablePersistence: true }, '#specSwitch');
+            expect(specSwitch.checked).toBe(true);
+        });
     });
     describe('Notify property Changes', () => {
         afterEach(() => {
@@ -299,10 +312,12 @@ describe('Switch', () => {
             specSwitch.dataBind();
             expect(specSwitch.disabled).toEqual(true);
             expect(element.parentElement.classList.contains('e-switch-disabled')).toEqual(true);
+            expect(element.parentElement.classList.contains('e-disabled')).toEqual(true);
             specSwitch.disabled = false;
             specSwitch.dataBind();
             expect(specSwitch.disabled).toEqual(false);
             expect(element.parentElement.classList.contains('e-switch-disabled')).toEqual(false);
+            expect(element.parentElement.classList.contains('e-disabled')).toEqual(false);
         });
         it('Switch with RTL', () => {
             specSwitch = new Switch({}, '#specSwitch');

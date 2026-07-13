@@ -2229,10 +2229,10 @@ export function _getColorValue(colorName: string): number[] {
  * @private
  * @param {PdfTemplate} template Template object.
  * @param {number} angle Angle value.
- * @param {PdfRubberStampAnnotation} annotation Rubberstamp annotation.
+ * @param {PdfAnnotation} annotation annotation instance.
  * @returns {void} Nothing.
  */
-export function _setMatrix(template: PdfTemplate, angle?: number, annotation?: PdfRubberStampAnnotation): void {
+export function _setMatrix(template: PdfTemplate, angle?: number, annotation?: PdfAnnotation): void {
     const box: number[] = template._content.dictionary.getArray('BBox');
     let centerX: number = 0.1;
     let centerY: number = 0.1;
@@ -2246,7 +2246,11 @@ export function _setMatrix(template: PdfTemplate, angle?: number, annotation?: P
             } else if (angle === 180) {
                 matrix._translate(box[2], box[3]);
             } else if (angle === 270) {
-                matrix._translate(-box[1], box[2]);
+                if (annotation) {
+                    matrix._translate(-box[1], box[2]);
+                } else {
+                    matrix._translate(-box[1], box[3]);
+                }
             }
             if (angle % 90 !== 0 && annotation && annotation instanceof PdfRubberStampAnnotation) {
                 let box0: number;
@@ -4216,7 +4220,7 @@ export function _obtainFontDetails(form: PdfForm, widget: PdfWidgetAnnotation, f
     if ((font === null || typeof font === 'undefined') || (font && font.size === 1)) {
         if (widget && !(widget._field instanceof PdfComboBoxField)) {
             font = widget._circleCaptionFont;
-        } else if (field && !(field instanceof PdfComboBoxField) ) {
+        } else if (field) {
             font = field._circleCaptionFont;
         }
     }
@@ -4817,6 +4821,13 @@ export function _updateBounds(annotation: PdfAnnotation, bounds?: number[]): num
             if (cropBoxOrMediaBox && cropBoxOrMediaBox.length > 2 && (cropBoxOrMediaBox[0] !== 0 || cropBoxOrMediaBox[1] !== 0)) {
                 rect[0] += cropBoxOrMediaBox[0];
                 rect[1] += cropBoxOrMediaBox[1];
+            }
+        }
+        if (annotation._page && typeof annotation._page._getTemplateReservedSpace === 'function') {
+            const reserved: number[] = annotation._page._getTemplateReservedSpace();
+            if (reserved && reserved.length >= 4) {
+                rect[0] += reserved[3];
+                rect[1] -= reserved[0];
             }
         }
         return [rect[0], rect[1], rect[0] + rect[2], rect[1] + rect[3]];
@@ -5880,4 +5891,63 @@ export function _bytesToHex(buffer: Uint8Array): string {
         .map((byte: number) => _padStart(byte.toString(16), 2, '0'))
         .join('')
         .toUpperCase();
+}
+/**
+ * Formats a number according to the current style.
+ *
+ * @private
+ * @param {number} value The numeric value.
+ * @param {PdfNumberStyle} numberStyle The numeric value.
+ * @returns {string} The formatted string.
+ */
+export function _formatNumber(value: number, numberStyle: PdfNumberStyle): string {
+    switch (numberStyle) {
+    case PdfNumberStyle.numeric:
+        return value.toString();
+    case PdfNumberStyle.upperRoman:
+        return _toRoman(value).toUpperCase();
+    case PdfNumberStyle.lowerRoman:
+        return _toRoman(value).toLowerCase();
+    case PdfNumberStyle.upperLatin:
+        return _toAlpha(value).toUpperCase();
+    case PdfNumberStyle.lowerLatin:
+        return _toAlpha(value).toLowerCase();
+    default:
+        return value.toString();
+    }
+}
+/**
+ * Converts a number to Roman numerals.
+ *
+ * @private
+ * @param {number} num The number to convert.
+ * @returns {string} The Roman numeral representation.
+ */
+export function _toRoman(num: number): string {
+    const values: number[] = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    const symbols: string[] = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+    let result: string = '';
+    for (let i: number = 0; i < values.length; i++) {
+        while (num >= values[<number>i]) {
+            result += symbols[<number>i];
+            num -= values[<number>i];
+        }
+    }
+    return result;
+}
+/**
+ * Converts a number to alphabetic representation.
+ *
+ * @private
+ * @param {number} num The number to convert.
+ * @returns {string} The alphabetic representation.
+ */
+export function _toAlpha(num: number): string {
+    let result: string = '';
+    while (num > 0) {
+        num--;
+        result = String.fromCharCode(97 + (num % 26)) + result;
+        num = Math.floor(num / 26);
+    }
+    return result;
 }

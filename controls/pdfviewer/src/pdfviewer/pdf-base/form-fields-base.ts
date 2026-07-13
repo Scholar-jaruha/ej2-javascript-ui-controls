@@ -1,8 +1,8 @@
 import { isNullOrUndefined } from '@syncfusion/ej2-base';
-import { PdfDocument, PdfPage, PdfForm, PdfTextBoxField, PdfFormFieldVisibility, PdfTextAlignment, PdfSignatureField, PdfField, PdfFreeTextAnnotation, PdfFontFamily, PdfStandardFont, PdfAnnotationFlag, PdfRubberStampAnnotation, PdfImage, PdfBitmap, PdfGraphics, PdfGraphicsState, PdfFontStyle as FontStyle, PdfCheckBoxField, PdfComboBoxField, PdfListBoxField, PdfListFieldItem, PdfRadioButtonListField, PdfRadioButtonListItem, PdfRotationAngle, PdfFontStyle, PdfFont, PdfTemplate, PdfInkAnnotation, PdfTrueTypeFont, PdfAnnotationCollection, PdfAnnotation, _PdfReference, _PdfDictionary, PdfPath, Rectangle, Size, Point} from '@syncfusion/ej2-pdf';
-import { PdfViewer, PdfViewerBase, PageRenderer, PageRotation } from '../index';
+import { PdfDocument, PdfPage, PdfForm, PdfTextBoxField, PdfFormFieldVisibility, PdfTextAlignment, PdfSignatureField, PdfField, PdfFreeTextAnnotation, PdfFontFamily, PdfStandardFont, PdfAnnotationFlag, PdfRubberStampAnnotation, PdfImage, PdfBitmap, PdfGraphics, PdfGraphicsState, PdfFontStyle as FontStyle, PdfCheckBoxField, PdfComboBoxField, PdfListBoxField, PdfListFieldItem, PdfRadioButtonListField, PdfRadioButtonListItem, PdfRotationAngle, PdfFontStyle, PdfFont, PdfTemplate, PdfInkAnnotation, PdfTrueTypeFont, PdfAnnotationCollection, PdfAnnotation, _PdfReference, _PdfDictionary, PdfPath, Rectangle, Point, Size, PdfButtonField} from '@syncfusion/ej2-pdf';
+import { PdfViewer, PdfViewerBase, PageRenderer, PageRotation, AnnotationRenderer } from '../index';
 import { getArialFontData } from '../pdf-base/fontData';
-import { Rect } from '@syncfusion/ej2-drawings';
+import { Rect } from './../ej2-drawings/index';
 import { PdfViewerUtils } from '../base/pdfviewer-utlis';
 
 /**
@@ -107,6 +107,79 @@ export class FormFieldsBase {
 
     /**
      * @private
+     * @param {any} textSignature - This is textSignature
+     * @param {any} loadedDocument - loadedDocument
+     * @param {boolean} isAnnotationFlattern - isAnnotationFlattern
+     * @returns {void}
+     */
+    public updateFreeTextAnnotations(textSignature: any, loadedDocument: any, isAnnotationFlattern: boolean): void {
+        const stampObjects: any = textSignature.data;
+        const annotationIndex: number = textSignature.annotationIndex;
+        const textData: string = stampObjects.replace(/"/g, '');
+        const boundsObject: Rect = JSON.parse(textSignature.bounds);
+        const page: PdfPage = loadedDocument.getPage(textSignature.pageIndex);
+        let signatureAnnotation: PdfAnnotation;
+        const pdfAnnotations: PdfAnnotationCollection = page.annotations;
+        const matchedAnnotation: any =
+            this.pdfViewerBase.pdfAnnotationList.find((item: any) => item.annotationIndex === annotationIndex);
+        for (let i: number = 0; i < pdfAnnotations.count; i++) {
+            const currentAnnotation: PdfAnnotation = page.annotations.at(i);
+            if (currentAnnotation._dictionary.objId === matchedAnnotation.annotation._dictionary.objId) {
+                signatureAnnotation = currentAnnotation;
+                break;
+            }
+        }
+        if (stampObjects !== '') {
+            const left: number = this.convertPixelToPoint(boundsObject.left);
+            const top: number = this.convertPixelToPoint(boundsObject.top);
+            const width: number = this.convertPixelToPoint(boundsObject.width);
+            const height: number = this.convertPixelToPoint(boundsObject.height);
+            if (signatureAnnotation instanceof PdfFreeTextAnnotation) {
+                const annotation: PdfFreeTextAnnotation = signatureAnnotation;
+                annotation.bounds = {x: left, y: top, width: width, height: height};
+                annotation._dictionary.set('NM', textSignature.signatureName.toString());
+                let fontSize: number = textSignature.fontSize;
+                annotation.border.width = 0;
+                let fontFamilyEnum: PdfFontFamily = PdfFontFamily.helvetica;
+                const fontName: string = textSignature.fontFamily.toString();
+                if (!isNullOrUndefined(fontName)) {
+                    const family: string = fontName.toString();
+                    if (family.includes('Times New Roman')) {
+                        fontFamilyEnum = PdfFontFamily.timesRoman;
+                    }
+                    else if (family.includes('Courier')) {
+                        fontFamilyEnum = PdfFontFamily.courier;
+                    }
+                    else if (family.includes('Symbol')) {
+                        fontFamilyEnum = PdfFontFamily.symbol;
+                    }
+                    else if (family.includes('ZapfDingbats')) {
+                        fontFamilyEnum = PdfFontFamily.zapfDingbats;
+                    }
+                }
+                fontSize = Math.floor(this.convertPixelToPoint(fontSize));
+                const fontStyle: FontStyle = FontStyle.regular;
+                annotation.font = new PdfStandardFont(fontFamilyEnum, fontSize, fontStyle);
+                annotation.text = textData;
+                annotation.borderColor = {r: 0, g: 0, b: 0};
+                annotation.textAlignment = PdfTextAlignment.center;
+                annotation._annotFlags = PdfAnnotationFlag.print;
+                if (isAnnotationFlattern) {
+                    const rotateAngle: number = this.getRotateAngle(page.rotation);
+                    annotation.rotationAngle = Math.abs(rotateAngle);
+                }
+                annotation.setValues('AnnotationType', 'Signature');
+                if (isAnnotationFlattern) {
+                    annotation.flatten = true;
+                }
+                annotation.setAppearance(true);
+                annotation._dictionary._updated = true;
+            }
+        }
+    }
+
+    /**
+     * @private
      * @returns {void}
      */
     public destroy(): void {
@@ -184,6 +257,69 @@ export class FormFieldsBase {
                 appearance.graphics.drawImage(bitmap, bounds);
             }
             page.annotations.add(rubberStampAnnotation);
+        }
+    }
+
+    /**
+     * @private
+     * @param {any} signatureImage - signatureImage
+     * @param {any} loadedDocument - loadedDocument
+     * @param {boolean} isAnnotationFlattern - isAnnotationFlattern
+     * @returns {void}
+     */
+    public updateImage(signatureImage: any, loadedDocument: any, isAnnotationFlattern: boolean): void {
+        const stampObjects: any = signatureImage.data;
+        const annotationIndex: number = signatureImage.annotationIndex;
+        const boundsObject: Rect = JSON.parse(signatureImage.bounds);
+        const page: PdfPage = loadedDocument.getPage(signatureImage.pageIndex);
+        let signatureAnnotation: PdfAnnotation;
+        const pdfAnnotations: PdfAnnotationCollection = page.annotations;
+        const matchedAnnotation: any =
+            this.pdfViewerBase.pdfAnnotationList.find((item: any) => item.annotationIndex === annotationIndex);
+        for (let i: number = 0; i < pdfAnnotations.count; i++) {
+            const currentAnnotation: PdfAnnotation = page.annotations.at(i);
+            if (currentAnnotation._dictionary.objId === matchedAnnotation.annotation._dictionary.objId) {
+                signatureAnnotation = currentAnnotation;
+                break;
+            }
+        }
+        if (stampObjects !== '') {
+            const imageUrl: string = (stampObjects.toString()).split(',')[1];
+            const left: number = this.convertPixelToPoint(boundsObject.left);
+            const top: number = this.convertPixelToPoint(boundsObject.top);
+            let width: number = this.convertPixelToPoint(boundsObject.width);
+            let height: number = this.convertPixelToPoint(boundsObject.height);
+            if (page.rotation === PdfRotationAngle.angle90 || page.rotation === PdfRotationAngle.angle270) {
+                [width, height] = [height, width];
+            }
+            if (signatureAnnotation instanceof PdfRubberStampAnnotation) {
+                const rubberStampAnnotation: PdfRubberStampAnnotation = signatureAnnotation;
+                rubberStampAnnotation.bounds = {x: left, y: top, width: width, height: height};
+                const bitmap: PdfImage = new PdfBitmap(imageUrl);
+                const graphics: PdfGraphics = page.graphics;
+                const appearance: PdfTemplate = rubberStampAnnotation.appearance.normal;
+                rubberStampAnnotation._dictionary.set('NM', signatureImage.signatureName.toString());
+                const rotationAngle: number = this.getRotateAngle(page.rotation);
+                rubberStampAnnotation.rotationAngle = Math.abs(rotationAngle);
+                if (isAnnotationFlattern) {
+                    rubberStampAnnotation.flatten = true;
+                }
+                const bounds: Rectangle = {
+                    x: 0,
+                    y: 0,
+                    width: width,
+                    height: height
+                };
+                if (!isAnnotationFlattern) {
+                    const state: PdfGraphicsState = graphics.save();
+                    appearance.graphics.drawImage(bitmap, bounds);
+                    appearance.graphics.restore(state);
+                }
+                else {
+                    appearance.graphics.drawImage(bitmap, bounds);
+                }
+                rubberStampAnnotation._dictionary._updated = true;
+            }
         }
     }
 
@@ -285,7 +421,7 @@ export class FormFieldsBase {
                                 const field: any = data[`${currentFieldName}`];
                                 if (!isNullOrUndefined(field) && Object.prototype.hasOwnProperty.call(field, 'isReadOnly')) {
                                     (currentField as PdfTextBoxField).text = field['fieldValue'];
-                                    (currentField as PdfTextBoxField).readOnly = field['isReadOnly'] === 'true' ? true : false;
+                                    (currentField as PdfTextBoxField).readOnly = field['isReadOnly'] === true ? true : false;
                                 }
                                 this.setFont(field, currentField);
                             }
@@ -297,7 +433,7 @@ export class FormFieldsBase {
                                 const field: any = data[`${currentFieldName}`];
                                 if (!isNullOrUndefined(field) && Object.prototype.hasOwnProperty.call(field, 'isReadOnly')) {
                                     (currentField as PdfTextBoxField).text = field['fieldValue'];
-                                    (currentField as PdfTextBoxField).readOnly = field['isReadOnly'] === 'true' ? true : false;
+                                    (currentField as PdfTextBoxField).readOnly = field['isReadOnly'] === true ? true : false;
                                 }
                                 this.setFont(field, currentField);
                             }
@@ -973,7 +1109,7 @@ export class FormFieldsBase {
             this.drawDesignerFieldFreeTextAnnotations(signatureField, signatureFieldName, formFieldAttributes);
         } else if (formFieldAttributes.signatureType === 'Image') {
             this.drawDesignerFieldImage(signatureField, signatureFieldName, formFieldAttributes);
-        } else if (formFieldAttributes.signatureType === 'Path') {
+        } else if (formFieldAttributes.signatureType === 'Path' || formFieldAttributes.signatureType === 'Draw') {
             if (!isNullOrUndefined(formFieldAttributes.value) && formFieldAttributes.value !== '') {
                 this.drawDesignerFieldPath(signatureField, signatureFieldName, formFieldAttributes);
             }
@@ -1486,7 +1622,11 @@ export class FormFieldsBase {
 
                     } else if (field instanceof PdfComboBoxField) {
                         const comboBoxField: PdfComboBoxField = loadedForm.fieldAt(i) as PdfComboBoxField;
-                        this.addComboBoxField(comboBoxField, pageNumber);
+                        if (comboBoxField._kidsCount > 1) {
+                            this.addComboBoxFieldItems(comboBoxField);
+                        } else {
+                            this.addComboBoxField(comboBoxField, pageNumber);
+                        }
                     }
                     else if (field instanceof PdfCheckBoxField) {
                         const checkbox: PdfCheckBoxField = field as PdfCheckBoxField;
@@ -1497,7 +1637,11 @@ export class FormFieldsBase {
                         }
                     } else if (field instanceof PdfListBoxField) {
                         const listBoxField: PdfListBoxField = field as PdfListBoxField;
-                        this.addListBoxField(listBoxField, pageNumber);
+                        if (listBoxField._kidsCount > 1) {
+                            this.addListBoxFieldItems(listBoxField);
+                        } else {
+                            this.addListBoxField(listBoxField, pageNumber);
+                        }
                     } else if (field instanceof PdfRadioButtonListField) {
                         for (let i: number = 0; i < field.itemsCount; i++) {
                             const item: PdfRadioButtonListItem = field.itemAt(i);
@@ -1520,6 +1664,14 @@ export class FormFieldsBase {
                             } else {
                                 this.addSignatureField(signatureField, pageNumber, signatureField.bounds);
                             }
+                        }
+                    } else if (field instanceof PdfButtonField) {
+                        const buttonField: PdfButtonField = field;
+                        if (buttonField.itemsCount > 0) {
+                            this.addButtonFieldItems(buttonField);
+                        }
+                        else {
+                            this.addButtonField(buttonField, pageNumber, null);
                         }
                     }
                 }
@@ -1612,7 +1764,28 @@ export class FormFieldsBase {
         this.PdfRenderedFormFields.push(formFields);
     }
 
-    private addComboBoxField(comboBoxField: PdfComboBoxField, pageNumber: number): void {
+    private addComboBoxFieldItems(field: PdfComboBoxField): void {
+        if (field instanceof PdfComboBoxField) {
+            const comboBoxField: PdfComboBoxField = field;
+            if (comboBoxField._kidsCount > 1) {
+                for (let i: number = 0; i < comboBoxField._kidsCount; i++) {
+                    const item: PdfPage = comboBoxField.itemAt(i).page;
+                    if (!isNullOrUndefined(item)) {
+                        let j: number = 0;
+                        for (let k: number = 0; k < this.formFieldLoadedDocument.pageCount; k++) {
+                            if (item === this.formFieldLoadedDocument.getPage(j)) {
+                                break;
+                            }
+                            j++;
+                        }
+                        this.addComboBoxField(comboBoxField, j, comboBoxField.itemAt(i).bounds);
+                    }
+                }
+            }
+        }
+    }
+
+    private addComboBoxField(comboBoxField: PdfComboBoxField, pageNumber: number, bounds?: any): void {
         const formFields: PdfRenderedFields = new PdfRenderedFields();
         formFields.Name = 'DropDown';
         formFields.ToolTip = comboBoxField.toolTip;
@@ -1626,6 +1799,9 @@ export class FormFieldsBase {
         }
         formFields.ActualFieldName = comboBoxField.name;
         formFields.SelectedValue = comboBoxField.selectedValue as string;
+        if (Array.isArray(comboBoxField.selectedValue) && comboBoxField.selectedValue.length === 0) {
+            formFields.SelectedValue = '';
+        }
         if (comboBoxField._options.length > 0 && (typeof comboBoxField._options[0] !== 'string')){
             const selectedValue: string[][] = comboBoxField._options.filter((option: string[]) => option[0] === formFields.SelectedValue);
             if (selectedValue && selectedValue[0]) {
@@ -1633,8 +1809,12 @@ export class FormFieldsBase {
             }
         }
         formFields.selectedIndex = comboBoxField.selectedIndex as number;
-        formFields.LineBounds = { X: comboBoxField.bounds.x, Y: comboBoxField.bounds.y, Width: comboBoxField.bounds.width,
-            Height: comboBoxField.bounds.height };
+        if (!isNullOrUndefined(bounds)) {
+            formFields.LineBounds = { X: bounds.x, Y: bounds.y, Width: bounds.width, Height: bounds.height };
+        } else {
+            formFields.LineBounds = { X: comboBoxField.bounds.x, Y: comboBoxField.bounds.y, Width: comboBoxField.bounds.width,
+                Height: comboBoxField.bounds.height };
+        }
         formFields.TabIndex = comboBoxField.tabIndex;
         formFields.PageIndex = pageNumber;
         if (!isNullOrUndefined(comboBoxField.backColor)) {
@@ -1715,10 +1895,8 @@ export class FormFieldsBase {
             formFields.LineBounds = { X: bounds.x, Y: bounds.y, Width: bounds.width, Height: bounds.height };
         }
         else {
-            formFields.LineBounds = {
-                X: chkField.bounds.x, Y: chkField.bounds.y, Width: chkField.bounds.width,
-                Height: chkField.bounds.height
-            };
+            formFields.LineBounds = { X: chkField.bounds.x, Y: chkField.bounds.y, Width: chkField.bounds.width,
+                Height: chkField.bounds.height };
         }
         formFields.Selected = chkitem.checked;
         formFields.TabIndex = chkField.tabIndex;
@@ -1759,13 +1937,37 @@ export class FormFieldsBase {
         this.PdfRenderedFormFields.push(formFields);
     }
 
-    private addListBoxField(listBoxField: PdfListBoxField, pageNumber: number): void {
+    private addListBoxFieldItems(field: PdfListBoxField): void {
+        if (field instanceof PdfListBoxField) {
+            const listBoxField: PdfListBoxField = field;
+            if (listBoxField._kidsCount > 1) {
+                for (let i: number = 0; i < listBoxField._kidsCount; i++) {
+                    const item: PdfPage = listBoxField.itemAt(i).page;
+                    if (!isNullOrUndefined(item)) {
+                        let j: number = 0;
+                        for (let k: number = 0; k < this.formFieldLoadedDocument.pageCount; k++) {
+                            if (item === this.formFieldLoadedDocument.getPage(j)) {
+                                break;
+                            }
+                            j++;
+                        }
+                        this.addListBoxField(listBoxField, j, listBoxField.itemAt(i).bounds);
+                    }
+                }
+            }
+        }
+    }
+
+    private addListBoxField(listBoxField: PdfListBoxField, pageNumber: number, bounds?: any): void {
         const formFields: PdfRenderedFields = new PdfRenderedFields();
         formFields.Name = 'ListBox';
         formFields.ToolTip = listBoxField.toolTip;
         formFields.Text = listBoxField.name.replace(/[^0-9a-zA-Z]+/g, '');
         formFields.ActualFieldName = listBoxField.name;
         formFields.SelectedValue = listBoxField.selectedValue as string;
+        if (Array.isArray(listBoxField.selectedValue) && listBoxField.selectedValue.length === 0) {
+            formFields.SelectedValue = '';
+        }
         if (listBoxField._options.length > 0 && (typeof listBoxField._options[0] !== 'string')){
             const selectedValue: string[][] = listBoxField._options.filter((option: string[]) => option[0] === formFields.SelectedValue);
             if (selectedValue && selectedValue[0]) {
@@ -1789,8 +1991,12 @@ export class FormFieldsBase {
             const fontStyle: number = listBoxField._dictionary.get('FontStyle');
             formFields.Font = this.parseFontStyle(fontStyle, formFields.Font);
         }
-        formFields.LineBounds = { X: listBoxField.bounds.x, Y: listBoxField.bounds.y, Width: listBoxField.bounds.width,
-            Height: listBoxField.bounds.height };
+        if (!isNullOrUndefined(bounds)) {
+            formFields.LineBounds = { X: bounds.x, Y: bounds.y, Width: bounds.width, Height: bounds.height };
+        } else {
+            formFields.LineBounds = { X: listBoxField.bounds.x, Y: listBoxField.bounds.y, Width: listBoxField.bounds.width,
+                Height: listBoxField.bounds.height };
+        }
         formFields.TabIndex = listBoxField.tabIndex;
         formFields.PageIndex = pageNumber;
         formFields.BorderWidth = listBoxField.border.width;
@@ -1867,6 +2073,80 @@ export class FormFieldsBase {
         formFields.RotationAngle = this.GetRotateAngle(item.page.rotation);
         if (parent._dictionary.has('CustomData')) {
             formFields.CustomData = JSON.parse(parent._dictionary.get('CustomData'));
+        }
+        this.PdfRenderedFormFields.push(formFields);
+    }
+
+    private addButtonFieldItems(field: PdfField): void {
+        if (field instanceof PdfButtonField) {
+            const btn: PdfButtonField = field as PdfButtonField;
+            if (btn.itemsCount > 0) {
+                for (let i: number = 0; i < btn.itemsCount; i++) {
+                    const item: PdfPage = btn.itemAt(i).page;
+                    if (!isNullOrUndefined(item)) {
+                        let j: number = 0;
+                        for (let k: number = 0; k < this.formFieldLoadedDocument.pageCount; k++) {
+                            if (item === this.formFieldLoadedDocument.getPage(j)) {
+                                break;
+                            }
+                            j++;
+                        }
+                        this.addButtonField(btn, j, btn.itemAt(i).font);
+                    }
+                }
+            }
+        }
+    }
+
+    private addButtonField(btnField: PdfButtonField, index: number, font?: PdfFont): void {
+        const formFields: PdfRenderedFields = new PdfRenderedFields();
+        const bounds: any = btnField.bounds;
+        formFields.Name = 'Button';
+        formFields.ToolTip = btnField.toolTip;
+        formFields.FieldName = btnField.name;
+        if (!bounds.IsEmpty) {
+            formFields.LineBounds = { X: bounds.x, Y: bounds.y, Width: bounds.width, Height: bounds.height };
+        }
+        else {
+            formFields.LineBounds = {
+                X: btnField.bounds.x, Y: btnField.bounds.y, Width: btnField.bounds.width,
+                Height: btnField.bounds.height
+            };
+        }
+        formFields.TabIndex = btnField.tabIndex;
+        formFields.GroupName = btnField.name.replace(/[^0-9a-zA-Z]+/g, '');
+        formFields.ActualFieldName = btnField.name;
+        formFields.PageIndex = index;
+        formFields.BorderWidth = btnField.border.width;
+        if (!isNullOrUndefined(font)) {
+            formFields.Font = this.fontConvert(btnField.font, btnField);
+        }
+        else {
+            formFields.Font = this.fontConvert(btnField.font, btnField);
+        }
+        if (!isNullOrUndefined(btnField.backColor)) {
+            formFields.BackColor = { R: btnField.backColor.r, G: btnField.backColor.g, B: btnField.backColor.b };
+        }
+        else {
+            formFields.IsTransparent = true;
+        }
+        formFields.BorderStyle = btnField.border.style;
+        if (!isNullOrUndefined(btnField.borderColor)) {
+            formFields.BorderColor = { R: btnField.borderColor.r, G: btnField.borderColor.g, B: btnField.borderColor.b };
+        }
+        else {
+            formFields.IsTransparent = true;
+        }
+        formFields.RotationAngle = this.GetRotateAngle(btnField.page.rotation);
+        formFields.Rotation = btnField.rotationAngle;
+        formFields.IsReadonly = btnField.readOnly;
+        formFields.IsRequired = btnField.required;
+        formFields.Visible = btnField.visibility;
+        formFields.Value = btnField.text;
+        formFields.RotationAngle = this.GetRotateAngle(btnField.page.rotation);
+        formFields.Text = btnField.text;
+        if (btnField._dictionary.has('CustomData')) {
+            formFields.CustomData = JSON.parse(btnField._dictionary.get('CustomData'));
         }
         this.PdfRenderedFormFields.push(formFields);
     }

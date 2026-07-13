@@ -93,36 +93,36 @@ Rich Text Editor control is also offered in following list of frameworks.
 
 ## 🏗️ Showcase samples
 
-* [JavaScript HTML editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/tools.html)
-* [Blog posting using JavaScript rich text editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/blog-posting.html)
-* [JavaScript Markdown editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/markdown-editor.html)
-* [JavaScript Live HTML editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/online-html-editor.html)
+* [JavaScript HTML editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/tools.html)
+* [Blog posting using JavaScript rich text editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/blog-posting.html)
+* [JavaScript Markdown editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/markdown-editor.html)
+* [JavaScript Live HTML editor demo](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/online-html-editor.html)
 
 ## ✨ Key features
 
-* [Edit mode](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/iframe.html) - HTML content is possible to edit in a `div` element or an `iframe` in the rich text editor.
+* [AI Assistant](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/ai-assistant.html) - The AI Assistant helps generate, rewrite, summarize, and refine editor content. It is designed to speed up content creation and improve editing productivity.
 
-* [@Mentions](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/mention-integration.html) - Easily mention users, tags, or items with an autocomplete suggestion list.
+* [Paste from MS Word](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/paste-cleanup.html) - Paste from MS Word brings content into the editor with formatting cleanup and structure preservation. It helps users reuse Word content without carrying over unwanted styles.
 
-* [Slash Menu Support](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/smart-suggestion.html) - Quickly insert content blocks using the `/` command.
+* [IFrame](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/iframe.html) - IFrame mode renders the editor content inside an isolated document context. It helps improve style encapsulation and reduces interference from external page styles.
 
-* [Checklist Suport](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/tools.html) - Allows users to create checklists (to-do lists) directly within the editor. Users can easily add interactive checkbox items to their content.
+* [@Mentions](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/mention-integration.html) - Mentions let users tag people, topics, or items with an autocomplete suggestion list. They make collaboration and inline referencing faster and more accurate.
 
 * [Accessibility & WCAG 2.0 Compliance](https://ej2.syncfusion.com/documentation/rich-text-editor/accessibility?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - Ensures full accessibility support, making it user-friendly for people who rely on assistive technologies (AT) or keyboard navigation.
 
-* [Preventing Cross-Site Scripting (XSS)](https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/prevent-cross-site-scripting/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - The Rich Text Editor allows users to edit the content with security by preventing cross-site scripting (XSS).
+* [Checklist](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/tools.html) - Checklist support enables users to create interactive task lists in the editor. It is useful for organizing work items and tracking progress within content.
 
-* [HTML code editing](https://ej2.syncfusion.com/documentation/rich-text-editor/miscellaneous/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#code-view) - The rich text editor allows users to edit the HTML code directly in the HTML code view.
+* [Accessibility & WCAG 2.0 Compliance](https://ej2.syncfusion.com/documentation/rich-text-editor/accessibility/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-richtexteditor-npm) - Accessibility support helps the editor work with assistive technologies and keyboard navigation. It ensures the component can be used more effectively by a broader audience.
 
-* [Markdown editor](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/markdown-editor-preview.html) - The rich text editor allows you to edit Markdown content using the Markdown syntax.
+* [Preventing Cross-Site Scripting (XSS)](https://ej2.syncfusion.com/documentation/rich-text-editor/validation-security/xhtml-validation#cross-site-scripting-xss) - XSS protection helps validate and sanitize editor content before it is used or rendered. It reduces security risks by blocking malicious scripts and unsafe markup.
 
-* [Markdown content preview](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/markdown-editor-preview.html) - Preview of the modified Markdown content in the editor, you can give users the ability to see what the formatted content will look like before they save it.
+* [HTML code editing](https://ej2.syncfusion.com/documentation/rich-text-editor/editor-value#source-code-editing) - HTML code editing lets users view and edit the underlying markup directly. It is helpful when precise control over the document structure is required.
 
-* [Tools](https://ej2.syncfusion.com/documentation/rich-text-editor/tools.html?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#built-in-tools) - The rich text editor handles a wide range of features, including inserting images, hyperlinks, tables, formatting tools, and more.
+* [Markdown editor](https://ej2.syncfusion.com/documentation/rich-text-editor/editor-types/editor-modes#markdown-editor) - Markdown editor mode lets users create and edit content using Markdown syntax. It is ideal for lightweight authoring and text-based workflows.
 
-* [Toolbar appearance](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/types.html) - The rich text editor can provide a fully customizable toolbar that allows users to access the various formatting and editing options that are available.
+* [Custom Toolbar Items](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/insert-special-characters.html) - Custom toolbar items allow additional actions to be added to the editor toolbar. They help tailor the editing experience to specific application needs.
 
-* [Export and Import](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/bootstrap5/rich-text-editor/export-word.html) - Supports exporting content to PDF, and Word formats.
+* [Quick Toolbar](https://ej2.syncfusion.com/demos/?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm/#/tailwind3/rich-text-editor/quick-format-toolbar.html) - Quick Toolbar shows contextual actions for selected content such as text, images, and tables. It helps users apply common operations without leaving the editing area.
 
 * [Copy and paste](https://ej2.syncfusion.com/documentation/rich-text-editor/paste-cleanup?utm_source=npm&utm_medium=listing&utm_campaign=javascript-rich-text-editor-npm) - Copy and paste from Microsoft Word, Outlook, or other editors or sources while preserving formatting, styles, and structure.
 

@@ -1,7 +1,5 @@
-@use 'ej2-base/styles/definition/bds' as *;
-@use 'ej2-buttons/styles/button/bds-definition' as *;
-@forward 'ej2-base/styles/definition/bds';
-@forward 'ej2-buttons/styles/button/bds-definition';
+@use '@syncfusion/ej2-base/styles/common/base-variables' as *;
+
 $cpicker-split-btn-padding: 1px 4px !default;
 $cpicker-bigger-split-btn-padding: 7px 12px !default;
 $cpicker-split-line-height: 14px !default;
@@ -186,6 +184,7 @@ $show-value-palette-width: 270px !default;
 $color-half-border-width: .5px !default;
 $selected-value-float-text-right: -12px !default;
 $cpicker-cont-color-ctrl-btn-padding-top: 12px !default;
+$cpicker-media-width: 344px !default;
 
 /* stylelint-disable */
 .e-colorpicker-wrapper{

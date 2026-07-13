@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## 34.1.30 (2026-07-09)
+
+### PDF
+
+#### Bug Fixes
+
+- Resolved an issue where the combo box field font and color were returned as undefined.
+- Resolved an issue where free text annotations become invisible when appearance is enabled.
+- Resolved an issue where textbox field text was not preserved during rotation.
+- Resolved a script error during annotation export and import with special characters.
+
 ## 33.2.15 (2026-06-23)
 
 ### PDF
@@ -11,14 +22,6 @@
 - Resolved an issue where blank pages appeared when importing a page range from a PDF document.
 - Resolved the issue with incorrect grouped checkbox export values.
 
-## 33.2.13 (2026-06-16)
-
-### PDF
-
-#### Bug Fixes
-
-- Resolved an issue where the counts of form fields and items were not retrieved correctly.
-
 ## 33.2.12 (2026-06-09)
 
 ### PDF
@@ -26,6 +29,7 @@
 #### Bug Fixes
 
 - Resolved an issue where annotations were not preserved when updating their bounds in a specific PDF document.
+- Resolved an issue where the counts of form fields and items were not retrieved correctly.
 
 ## 33.2.10 (2026-06-02)
 
@@ -127,13 +131,15 @@
 - Fixed an issue where stamp annotation was not preserved correctly with incremental update false.
 - Resolved an issue where grouped checkbox fields returned incorrect export and import values.
 
-## 33.1.44 (2026-03-16)
+## 32.2.9 (2026-03-10)
 
 ### PDF
 
 #### Bug Fixes
 
 - Fixed an issue where stamp annotation appearance was not preserved correctly when saving the PDF multiple times.
+- Fixed an issue where the digital signature lock property was not preserved correctly.
+- Fixed an issue where incorrect bounds were retrieved for newly created stamp annotation that used existing data.
 
 ## 32.2.8 (2026-03-03)
 

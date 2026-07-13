@@ -761,6 +761,11 @@ export class BaseHistoryInfo {
                     this.owner.selectionModule.select(this.selectionEnd, this.selectionEnd);
                     this.undoRevisionForElements(insertTextPosition, endTextPosition, deletedNodes[deletedNodes.length - 1] as string);
                 }
+
+                if (this.owner.documentHelper.layout && this.owner.documentHelper.isFollowedListLayoutRequired) {
+                    let paragraph: ParagraphWidget = sel.start.paragraph.combineWidget(this.owner.viewer) as ParagraphWidget;
+                    this.owner.documentHelper.layout.reLayoutParagraph(paragraph, 0, 0, undefined, undefined);
+                }
                 let id: string = deletedNodes[deletedNodes.length - 1] as string;
                 if (this.removedNodes.indexOf(id) === -1) {
                     this.removedNodes.push(id);
@@ -1053,6 +1058,11 @@ export class BaseHistoryInfo {
                         start.paragraph.characterFormat.removeRevision(index);
                         this.owner.revisions.remove(revision);
                         this.owner.editorModule.splitRevisionsAndViewBasedOnUntrackedContent(start.paragraph.characterFormat);
+
+                        if (this.owner.documentHelper.layout && this.owner.documentHelper.isFollowedListLayoutRequired) {
+                            let paragraph: ParagraphWidget = start.paragraph.combineWidget(this.owner.viewer) as ParagraphWidget;
+                            this.owner.documentHelper.layout.reLayoutParagraph(paragraph, 0, 0, undefined, undefined);
+                        }
                     }
                     else if (this.action === 'RemoveRevision' && index === -1) {
                         start.paragraph.characterFormat.addRevision(revision);
@@ -1068,6 +1078,11 @@ export class BaseHistoryInfo {
                     else if (this.action === 'AddRevision' && index === -1) {
                         start.paragraph.characterFormat.addRevision(revision);
                         this.owner.editorModule.updateRevisionCollection(revision);
+
+                        if (this.owner.documentHelper.layout && this.owner.documentHelper.isFollowedListLayoutRequired) {
+                            let paragraph: ParagraphWidget = start.paragraph.combineWidget(this.owner.viewer) as ParagraphWidget;
+                            this.owner.documentHelper.layout.reLayoutParagraph(paragraph, 0, 0, undefined, undefined);
+                        }
                         // this.owner.revisions.changes.push(revision);
                     }
                 }
@@ -1329,7 +1344,16 @@ export class BaseHistoryInfo {
                         deletedNodes.splice(deletedNodes.indexOf(firstNode), 1);
                         //Removes the intermediate empty paragraph instance.
                         if (this.action !== 'Paste' && this.owner.selectionModule.start.paragraph !== firstNode.containerWidget.lastChild) {
-                            editor.removeBlock(this.owner.selectionModule.start.paragraph);
+                            let skipElementRemoval: boolean = false;
+                            let currentParagarph = this.owner.selectionModule.start.paragraph
+                            if (!(isNullOrUndefined(currentParagarph) && isNullOrUndefined(currentParagarph.bodyWidget) && isNullOrUndefined(currentParagarph.previousWidget)
+                                && isNullOrUndefined((currentParagarph.previousWidget as ParagraphWidget).bodyWidget))) {
+                                if (!(currentParagarph === currentParagarph.bodyWidget.lastChild && (currentParagarph.previousWidget as ParagraphWidget).bodyWidget.index !==
+                                currentParagarph.bodyWidget.index) && (currentParagarph.bodyWidget.sectionFormat.breakCode !== 'NoBreak' || currentParagarph !== currentParagarph.bodyWidget.firstChild)) {
+                                    skipElementRemoval = true;
+                                }
+                            }
+                            editor.removeBlock(this.owner.selectionModule.start.paragraph, undefined, skipElementRemoval);
                         }
                         let paragraph: ParagraphWidget = this.documentHelper.selection.getNextParagraphBlock(firstNode.getSplitWidgets().pop() as BlockWidget);
                         if (!isNullOrUndefined(paragraph) && (firstNode !== firstNode.containerWidget.lastChild || !isNullOrUndefined(firstNode.nextSplitWidget) && !(deletedNodes[0] instanceof BodyWidget))) {

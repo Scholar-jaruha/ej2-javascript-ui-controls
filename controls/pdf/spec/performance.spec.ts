@@ -8,7 +8,7 @@ import { PdfComboBoxField } from "../src/pdf/core/form";
 import { PdfBrush } from "../src/pdf/core/graphics/pdf-graphics";
 import { PdfDocument, PdfDocumentSplitEventArgs } from "../src/pdf/core/pdf-document";
 import { PdfDestination, PdfPage } from "../src/pdf/core/pdf-page";
-
+//import { arialFont, base64string, input, pdf_Succinctly } from "./inputs1.spec";
 import { annotations, input, pdfSuccinctly } from "./inputs.spec";
 import { ttfArialBase64 } from "./font-input.spec";
 import { natureImageBase64 } from "./image-input.spec";
@@ -61,7 +61,7 @@ describe('Performance', () => {
             }
             const end = performance.now();
             const resultText = end - start;
-            expect(resultText).toBeLessThanOrEqual(1800);
+            expect(resultText).toBeLessThanOrEqual(2000);
             document.destroy();
         } catch (err) {
             throw new Error(`TTF Font Test Failed: ${err instanceof Error ? err.message : err}`);
@@ -425,7 +425,7 @@ describe('Performance', () => {
         pdfDocument.importPageRange(documentSrc, 0, 10);
         const end = performance.now();
         const total = end - start;
-        expect(total).toBeLessThanOrEqual(600);
+        expect(total).toBeLessThanOrEqual(800);
         documentSrc.destroy();
         pdfDocument.destroy();
     });

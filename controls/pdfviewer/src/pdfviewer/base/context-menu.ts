@@ -116,7 +116,8 @@ export class ContextMenu implements IContextMenu {
         }
         this.contextMenuObj = new Context({
             target: '#' + this.pdfViewerBase.viewerContainer.id, items: this.copyContextMenu,
-            beforeOpen: this.contextMenuOnBeforeOpen.bind(this), select: this.onMenuItemSelect.bind(this),
+            beforeOpen: this.contextMenuOnBeforeOpen.bind(this), beforeClose: this.contextMenuOnBeforeClose.bind(this),
+            select: this.onMenuItemSelect.bind(this),
             created: this.contextMenuOnCreated.bind(this)
         });
         if (this.pdfViewer.enableRtl) {
@@ -161,6 +162,13 @@ export class ContextMenu implements IContextMenu {
         return target;
     }
 
+    private contextMenuOnBeforeClose(args: BeforeOpenCloseMenuEventArgs): void {
+        if (this.pdfViewerBase.isContextMenuOpen) {
+            args.cancel = true;
+            this.pdfViewerBase.isContextMenuOpen = false;
+        }
+    }
+
     private contextMenuOnBeforeOpen(args: BeforeOpenCloseMenuEventArgs): void {
         if (this.pdfViewerBase.preventContextmenu) {
             this.pdfViewerBase.preventContextmenu = false;
@@ -188,7 +196,9 @@ export class ContextMenu implements IContextMenu {
         }
         this.defaultContextMenuItems = [this.pdfViewer.localeObj.getConstant('Cut'), this.pdfViewer.localeObj.getConstant('Copy'), this.pdfViewer.localeObj.getConstant('Highlight context'),
             this.pdfViewer.localeObj.getConstant('Underline context'), this.pdfViewer.localeObj.getConstant('Strikethrough context'), this.pdfViewer.localeObj.getConstant('Squiggly context'),
-            this.pdfViewer.localeObj.getConstant('Redact Text'), this.pdfViewer.localeObj.getConstant('Paste'),
+            this.pdfViewer.localeObj.getConstant('Redact Text'),
+            this.pdfViewer.localeObj.getConstant('Apply Redactions'),
+            this.pdfViewer.localeObj.getConstant('Paste'),
             this.pdfViewer.localeObj.getConstant('Delete Context'), this.pdfViewer.localeObj.getConstant('Scale Ratio'), this.pdfViewer.localeObj.getConstant('Comment'), this.pdfViewer.localeObj.getConstant('Properties')
         ];
         const customItems: string[] = this.customMenuItems.length > 0 ?

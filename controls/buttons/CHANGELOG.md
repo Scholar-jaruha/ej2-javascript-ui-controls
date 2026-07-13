@@ -2,15 +2,15 @@
 
 ## [Unreleased]
 
-## 33.2.15 (2026-06-23)
+## 34.1.30 (2026-07-09)
 
-### Chip
+### Switch
 
 #### Bug Fixes
 
-- `#I844690` - Resolved an issue where the ChipList component click event did not provide the clickEventArgs.
+- `#I843865` - The issue with "Toggle Switch persistence should use stable input ID instead of wrapper ID" has been resolved.
 
-## 33.1.44 (2026-03-16)
+## 34.1.29 (2026-07-06)
 
 ### Chip
 
